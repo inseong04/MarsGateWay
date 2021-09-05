@@ -2,8 +2,6 @@ package com.example.marsgateway
 
 class DataType {
     companion object {
-        val roverCameraArray : List<String> = listOf("FHAZ", "RHAZ", "MAST", "CHEMCAM", "MAHLI","MARDI",
-            "NAVCAM", "PANCAM", "MINITES")
-
+        const val apiKey : String = "BAkkR7uubXoc9UZFlI8AGJDJxAEo1rXgKXE7Oh6A"
     }
 }
