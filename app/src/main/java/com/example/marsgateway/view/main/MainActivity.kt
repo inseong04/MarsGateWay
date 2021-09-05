@@ -1,4 +1,4 @@
-package com.example.marsgateway.view
+package com.example.marsgateway.view.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +10,10 @@ import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.marsgateway.R
+import com.example.marsgateway.adapter.FragmentAdapter
 import com.example.marsgateway.databinding.ActivityMainBinding
 import com.example.marsgateway.model.MarsWeather.Weather
+import com.example.marsgateway.viewmodel.MainViewModel
 import com.example.marsgateway.view.todaypicture.TodayPictureActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import org.jsoup.Jsoup

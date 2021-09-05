@@ -1,4 +1,4 @@
-package com.example.marsgateway
+package com.example.marsgateway.util
 
 class DataType {
     companion object {

@@ -19,9 +19,8 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.marsgateway.DataType
-import com.example.marsgateway.MyApplication
-import com.example.marsgateway.data.api.NasaServiceImpl
+import com.example.marsgateway.util.DataType
+import com.example.marsgateway.util.MyApplication
 import com.example.marsgateway.viewmodel.MarsRoverLandingViewModelFactory
 
 class MarsRoverLandingFragment : Fragment() {
@@ -69,7 +68,8 @@ class MarsRoverLandingFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter the exact date.", Toast.LENGTH_SHORT).show()
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
-                    viewModel.getPhotos(MyApplication.getApplication(),
+                    viewModel.getPhotos(
+                        MyApplication.getApplication(),
                         binding.landingEtv.text.toString(),
                         2,
                         DataType.apiKey)

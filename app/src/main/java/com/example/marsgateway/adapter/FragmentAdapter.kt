@@ -1,4 +1,4 @@
-package com.example.marsgateway.view
+package com.example.marsgateway.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

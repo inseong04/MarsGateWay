@@ -1,7 +1,6 @@
-package com.example.marsgateway.view.marsweather.adapter
+package com.example.marsgateway.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marsgateway.R

@@ -1,17 +1,12 @@
-package com.example.marsgateway.view
+package com.example.marsgateway.view.splash
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.example.marsgateway.R
-import com.example.marsgateway.view.todaypicture.TodayPictureActivity
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.marsgateway.view.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
     private val CHECK_USER_DATE = "FIRST_MEET"

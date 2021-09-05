@@ -1,4 +1,4 @@
-package com.example.marsgateway.view
+package com.example.marsgateway.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
