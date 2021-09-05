@@ -1,16 +1,10 @@
 package com.example.marsgateway.view.marsroverlanding
 
 import android.os.Bundle
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import com.example.marsgateway.DataType
-import com.example.marsgateway.viewmodel.MarsRoverLandingViewModelFactory
-import com.example.marsgateway.MyApplication
 import com.example.marsgateway.R
 import com.example.marsgateway.adapter.MarsRoverAdapter
 import com.example.marsgateway.databinding.FragmentMarsRoverLandingBinding
@@ -20,10 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.text.Editable
-
 import android.text.TextUtils
 import android.widget.Toast
-
+import com.example.marsgateway.data.api.NasaServiceImpl
 
 class MarsRoverLandingFragment : Fragment() {
 
