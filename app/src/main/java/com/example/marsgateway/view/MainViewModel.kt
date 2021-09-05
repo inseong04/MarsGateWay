@@ -8,4 +8,5 @@ class MainViewModel : ViewModel() {
 
     val sol : MutableLiveData<String> = MutableLiveData()
     val earthDate : MutableLiveData<String> = MutableLiveData()
+    val
 }
