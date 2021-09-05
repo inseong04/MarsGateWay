@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.marsgateway.R
 import com.example.marsgateway.databinding.ActivityMainBinding
+import com.example.marsgateway.model.MarsWeather.Weather
 import com.example.marsgateway.view.todaypicture.TodayPictureActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import org.jsoup.Jsoup
