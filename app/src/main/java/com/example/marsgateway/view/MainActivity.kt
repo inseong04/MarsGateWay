@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         val result = Jsoup.parse(html)
         vM.earthDate.postValue(result.select("span.earthDate").text())
         vM.sol.postValue(result.select("span.marsDate").text())
+        vM.
         Log.d(TAG, "ManufactureData: vM.sol : vM.sol.value ${vM.sol.value}")
     }
 
