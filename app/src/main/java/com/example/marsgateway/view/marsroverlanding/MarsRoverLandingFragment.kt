@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.marsgateway.R
+import com.example.marsgateway.data.api.NasaServiceImpl
 
 class MarsRoverLandingFragment : Fragment() {
 
