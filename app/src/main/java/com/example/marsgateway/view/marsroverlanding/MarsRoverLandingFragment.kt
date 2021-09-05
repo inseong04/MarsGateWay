@@ -15,8 +15,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.example.marsgateway.DataType
+import com.example.marsgateway.MyApplication
 import com.example.marsgateway.data.api.NasaServiceImpl
+import com.example.marsgateway.viewmodel.MarsRoverLandingViewModelFactory
 
 class MarsRoverLandingFragment : Fragment() {
 
