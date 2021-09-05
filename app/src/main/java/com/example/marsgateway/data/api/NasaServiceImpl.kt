@@ -5,13 +5,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NasaServiceImpl {
 
-    // use : NasaServiceImpl.getApiSerbice().(FuctionToUse)
+    // use : NasaServiceImpl.getNasaService().(FuctionToUse)
 
     private val baseUrl = "https://api.nasa.gov/"
 
     private var instance: Retrofit? = null
 
-    public fun getApiService(): NasaService = getInstance().create(NasaService::class.java)
+    public fun getNasaService(): NasaService = getInstance().create(NasaService::class.java)
 
     private fun getInstance(): Retrofit {
         if (instance == null) {
