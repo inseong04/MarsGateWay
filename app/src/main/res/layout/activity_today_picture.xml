@@ -11,6 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="Today's Astronomical picture"
+        android:background="@color/purple_700"
+        app:titleTextColor="@color/white"
         />
 
     <TextView
@@ -18,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="(사진 제목)"
+        android:text="loding...."
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,20 +40,27 @@
     <TextView
         android:id="@+id/explanationTv"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_margin="5dp"
+        android:layout_height="0dp"
+        android:layout_margin="7dp"
         android:lineSpacingExtra="4sp"
         android:scrollbars="vertical"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/pictureImg" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/quitBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pictureImg"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <Button
+    <TextView
         android:id="@+id/quitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:backgroundTint="@color/black"
-        android:text="오늘 하루 안보기"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:text="Don't see today"
+        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
