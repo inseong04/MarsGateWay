@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.marsgateway.R
 import com.example.marsgateway.databinding.ActivityMainBinding
-import com.example.marsgateway.model.MarsWeather.Weather
 import com.example.marsgateway.view.todaypicture.TodayPictureActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import org.jsoup.Jsoup
@@ -117,6 +116,10 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "ManufactureData: Marstemper $Marstemper")
         vM.todayMarsWeather.postValue(Marstemper)
         vM.weatherList.postValue(weatherList)
+        vM.earthDate.postValue(result.select("span.earthDate").text())
+        vM.sol.postValue(result.select("span.marsDate").text())
+
+        Log.d(TAG, "ManufactureData: vM.sol : vM.sol.value ${vM.sol.value}")
     }
 
 

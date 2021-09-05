@@ -14,10 +14,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.marsgateway.R;
@@ -26,6 +28,9 @@ import com.example.marsgateway.data.api.NasaService;
 import com.example.marsgateway.data.api.NasaServiceImpl;
 import com.example.marsgateway.model.PictureData;
 import com.example.marsgateway.view.MainActivity;
+import com.google.android.youtube.player.YouTubeApiServiceUtil;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -53,6 +58,7 @@ public class TodayPictureActivity extends AppCompatActivity {
     TextView quitBtn;
     PictureData pictureData;
     Toolbar toolbar;
+    WebView webView;
 
     private static final String CHECK_USER_DATE = "FIRST_MEET";
     private static final String TAG = "MainActivity";
@@ -60,6 +66,7 @@ public class TodayPictureActivity extends AppCompatActivity {
     private static final String CHECK_EVNET_POPUP_NO = "CHECK_EVNET_POPUP_NO";
     private static final String CHECK_EVNET_POPUP_YES = "CHECK_EVNET_POPUP_YES";
     private String event_popup_result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,11 @@ public class TodayPictureActivity extends AppCompatActivity {
         quitBtn = findViewById(R.id.quitBtn);
         explanationTv.setMovementMethod(new ScrollingMovementMethod());
         toolbar = findViewById(R.id.toolbar);
+        webView = findViewById(R.id.pictureVideo);
+
+        pictureImg.setVisibility(View.INVISIBLE);
+        webView.setVisibility(View.INVISIBLE);
+
         setSupportActionBar(toolbar);
         toolbar.setTitle("Today's Astronomical picture");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,34 +105,50 @@ public class TodayPictureActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     PictureData pictureData = response.body();
                     TodayPictureActivity.this.pictureData = pictureData;
-                    titleTv.setText(pictureData.title);
-                    explanationTv.setText(pictureData.explanation);
-                    Activity activity = TodayPictureActivity.this;
-                    if (activity.isFinishing())
-                        return;
-                    Glide.with(TodayPictureActivity.this)
-                            .load(pictureData.url)
-                            .into(pictureImg);
+                    if (pictureData.media_type.equals("video")) {
+                        Log.d(TAG, "onResponse: success");
+                        titleTv.setText(pictureData.title);
+                        explanationTv.setText(pictureData.explanation);
+                        Activity activity = TodayPictureActivity.this;
+                        webView.loadUrl(pictureData.url);
+                        webView.setVisibility(View.VISIBLE);
+
+
+                    } else {
+                        titleTv.setText(pictureData.title);
+                        explanationTv.setText(pictureData.explanation);
+                        Activity activity = TodayPictureActivity.this;
+                        if (activity.isFinishing())
+                            return;
+                        Glide.with(activity)
+                                .load(pictureData.url)
+                                .into(pictureImg);
+                        pictureImg.setVisibility(View.VISIBLE);
+                        Log.d(TAG, "media_type: " + pictureData.media_type);
+                    }
                 } else {
                     Log.e("error", String.valueOf(response.code()));
                 }
+
             }
+
             @Override
             public void onFailure(Call<PictureData> call, Throwable t) {
                 t.printStackTrace();
             }
         });
 
-        quitBtn.setOnClickListener(view ->{
-            getApplication().getSharedPreferences("event_popup",MODE_PRIVATE).edit().putString(CHECK_EVNET_POPUP,CHECK_EVNET_POPUP_YES).apply();
+        quitBtn.setOnClickListener(view -> {
+            getApplication().getSharedPreferences("event_popup", MODE_PRIVATE).edit().putString(CHECK_EVNET_POPUP, CHECK_EVNET_POPUP_YES).apply();
             finish();
         });
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+        switch (item.getItemId()) {
+            case android.R.id.home: { //toolbar의 back키 눌렀을 때 동작
                 finish();
                 return true;
             }
