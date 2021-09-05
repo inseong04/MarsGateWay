@@ -4,27 +4,34 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.marsgateway.R
-import com.example.marsgateway.data.api.NasaServiceImpl
 import com.example.marsgateway.databinding.ActivityMainBinding
 import com.example.marsgateway.view.todaypicture.TodayPictureActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import org.jsoup.Jsoup
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+    lateinit var vM : MainViewModel
     private val CHECK_USER_DATE = "FIRST_MEET"
     private val TAG = "TodayPictureActivity"
     private val CHECK_EVNET_POPUP = "CHECK_EVNET_POPUP"
     private val CHECK_EVNET_POPUP_NO = "CHECK_EVNET_POPUP_NO"
     private val CHECK_EVNET_POPUP_YES = "CHECK_EVNET_POPUP_YES"
+    var source : String? = null
+    var sol : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        vM = ViewModelProvider(this)[MainViewModel::class.java]
         val tabLayoutArray = arrayOf("Mars Weather", "Mars Rover Landing")
 
         checkShowOrNotshow()
@@ -37,6 +44,46 @@ class MainActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tapLayout, binding.viewPager){tap, position->
             tap.text =tabLayoutArray[position]
         }.attach()
+
+        binding.webView.getSettings().javaScriptEnabled = true
+        // 자바스크립트인터페이스 연결
+        // 이걸 통해 자바스크립트 내에서 자바함수에 접근할 수 있음.
+        binding.webView.addJavascriptInterface(MyJavascriptInterface(this), "Android")
+        // 페이지가 모두 로드되었을 때, 작업 정의
+        binding.webView.setWebViewClient(object : WebViewClient() {
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                // 자바스크립트 인터페이스로 연결되어 있는 getHTML를 실행
+                // 자바스크립트 기본 메소드로 html 소스를 통째로 지정해서 인자로 넘김
+                view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);")
+            }
+        })
+        //지정한 URL을 웹 뷰로 접근하기
+        binding.webView.loadUrl("https://mars.nasa.gov/layout/embed/image/m20weather/")
+    }
+
+    class MyJavascriptInterface(val holder: MainActivity){
+        @JavascriptInterface
+        fun getHtml(html: String) {
+
+            holder.ManufactureData(html)
+//            Log.d(TAG, "getHtml: sourceff : ${holder.source}")
+//            Log.d(TAG, "getHtml: 잊;ㅜㄴ상 천재")
+//            val result = Jsoup.parse(holder.source)
+//            val date = result.select("span.earthDate")
+//            holder.vM.earthDate.value = date.text()
+//            holder.vM.earthDate.value = result.select("span.marsDate").text()
+//            holder.funciotn1()
+
+        }
+    }
+    fun ManufactureData(html: String) {
+        Log.d(TAG, "onPageFinished: earchDate : ${vM.earthDate.value}")
+        Log.d(TAG, "ManufactureData: sourceff11 : $html")
+        val result = Jsoup.parse(html)
+        vM.earthDate.postValue(result.select("span.earthDate").text())
+        vM.sol.postValue(result.select("span.marsDate").text())
+        Log.d(TAG, "ManufactureData: vM.sol : vM.sol.value ${vM.sol.value}")
     }
 
 
@@ -87,6 +134,7 @@ class MainActivity : AppCompatActivity() {
     private fun intentPictureActivity() {
         startActivity(Intent(this, TodayPictureActivity::class.java))
     }
+    
 
     // 미래 : int_calDateDays > 0 양수
     // 현재 : int_calDateDays == 0 같을때

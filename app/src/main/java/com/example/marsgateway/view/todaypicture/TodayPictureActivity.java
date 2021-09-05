@@ -3,6 +3,7 @@ package com.example.marsgateway.view.todaypicture;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -94,6 +95,9 @@ public class TodayPictureActivity extends AppCompatActivity {
                     TodayPictureActivity.this.pictureData = pictureData;
                     titleTv.setText(pictureData.title);
                     explanationTv.setText(pictureData.explanation);
+                    Activity activity = TodayPictureActivity.this;
+                    if (activity.isFinishing())
+                        return;
                     Glide.with(TodayPictureActivity.this)
                             .load(pictureData.url)
                             .into(pictureImg);

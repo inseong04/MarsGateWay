@@ -32,6 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:text="Search"
+                android:background="@color/purple_700"
+                android:textColor="#fff"
                 android:layout_marginEnd="5sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/landingEtv"
