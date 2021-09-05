@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.marsgateway.R
 import com.example.marsgateway.databinding.ActivityMainBinding
+import com.example.marsgateway.model.MarsWeather.Weather
 import com.example.marsgateway.view.todaypicture.TodayPictureActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import org.jsoup.Jsoup
@@ -77,14 +78,45 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
     fun ManufactureData(html: String) {
-        Log.d(TAG, "onPageFinished: earchDate : ${vM.earthDate.value}")
-        Log.d(TAG, "ManufactureData: sourceff11 : $html")
+
         val result = Jsoup.parse(html)
-        vM.earthDate.postValue(result.select("span.earthDate").text())
-        vM.sol.postValue(result.select("span.marsDate").text())
-        vM.
-        Log.d(TAG, "ManufactureData: vM.sol : vM.sol.value ${vM.sol.value}")
+        val sol = result.select("span.marsDate").text()
+        val earthDate = result.select("span.earthDate").text()
+        vM.earthDate.postValue(earthDate)
+        vM.sol.postValue(sol)
+
+        val resultlist = result.select("span.fahrenheit").text().split(" ")
+
+        var Marstemper : String? = ""
+        for(i in 0..resultlist.count()-1){
+            if(i == 0){
+                Marstemper = Marstemper!!.plus("High : ").plus(resultlist[i]).plus(" F").plus("\n")
+            }
+            else{
+                Marstemper = Marstemper!!.plus("Low : ").plus(resultlist[i]).plus(" F")
+            }
+        }
+        val weatherResult = result.select("div.item")
+
+        val weatherList : ArrayList<Weather> = ArrayList()
+        for (i in weatherResult){
+            val html = Jsoup.parse(i.toString()).body()
+            Log.d(TAG, "ManufactureData: htmlWeather ; $html")
+            weatherList.add(Weather(
+                html.select("span.dateSol").text(),
+                html.select("span.dateUTC").text(),
+                "High:${html.select("div.high").text().split("High:")[2]}" +
+                        "\nLow:${html.select("div.low").text().split("Low")[2]}"
+            ))
+        }
+
+        Log.d(TAG, "ManufactureData: weatherList : $weatherList")
+        Log.d(TAG, "ManufactureData: item : $weatherResult")
+        Log.d(TAG, "ManufactureData: Marstemper $Marstemper")
+        vM.todayMarsWeather.postValue(Marstemper)
+        vM.weatherList.postValue(weatherList)
     }
 
 

@@ -25,6 +25,7 @@ import com.example.marsgateway.data.api.NasaService
 import com.example.marsgateway.data.api.NasaServiceImpl
 import com.example.marsgateway.view.MainActivity
 import com.example.marsgateway.view.MainViewModel
+import com.example.marsgateway.view.marsweather.adapter.WeatherListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -57,6 +58,16 @@ class MarsWeatherFragment : Fragment() {
         })
         vM.earthDate.observe(requireActivity(), Observer {
             binding.solText.text = vM.sol.value.toString()
+        })
+        vM.todayMarsWeather.observe(requireActivity(), Observer {
+            binding.temperatureText.text = vM.todayMarsWeather.value.toString()
+        })
+        vM.weatherList.observe(requireActivity(), {
+            binding.temperatureRecyclerView.adapter = vM.weatherList.value?.let { it1 ->
+                WeatherListAdapter(
+                    it1
+                )
+            }
         })
     }
 
